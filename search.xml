@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title>使用 Hexo 和 Github Pages 搭建自己的技术博客</title>
+    <url>/2020/09/08/%E4%BD%BF%E7%94%A8%20Hexo%20%E5%92%8C%20Next%20%E6%90%AD%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E5%8D%9A%E5%AE%A2/</url>
+    <content><![CDATA[<p>难得有时间，用 <code>Hexo</code> 和 <code>Github Pages</code> 搭了个博客。先记录一下搭建过程，便于日后维护，同时也希望能对其他想搭自己技术博客的朋友有所帮助。</p>
+<span id="more"></span>
+
+<h2 id="简单了解-Hexo-和-Github-Pages"><a href="#简单了解-Hexo-和-Github-Pages" class="headerlink" title="简单了解 Hexo 和 Github Pages"></a>简单了解 <code>Hexo</code> 和 <code>Github Pages</code></h2><p>其实很久之前用 <code>Pelican</code> 搭过一次博客，不过这次改用了 <code>Hexo</code>，主要是因为<code>Next</code> 这个主题风格简直深得我心。首先简单介绍下 <code>Hexo</code>，这是一个基于 <code>Node.js</code> 的博客框架（前面提到的 <code>Pelican</code> 也类似，只不过是基于 <code>Python</code> 的，类似的还有基于 <code>Ruby</code> 语言的 <code>Jekyll</code> 等），<code>Hexo</code> 的官网对其描述如下：</p>
+<blockquote>
+<p>Hexo is a fast, simple and powerful blog framework. You write posts in Markdown (or other markup languages) and Hexo generates static files with a beautiful theme in seconds.</p>
+</blockquote>
+<p>所以 <code>Hexo</code> 可以简单理解为一个帮我们将 <code>Markdown</code> 转化为完整静态网页文件的工具。接下来我们看看 <code>Github Pages</code>。<code>Hexo</code> 生成的静态网页文件放在哪里可以被其他人访问呢？你当然可以架设自己的服务器，购买域名，然后将静态文件部署上去，但是这样时间和人力成本都比较高，而且服务器维护需要花钱。所以一般比较快捷而且免费的渠道是使用 <a href="https://pages.github.com/"><code>Github Pages</code></a>。</p>
+<p>简而言之，你在自己的 <code>Github</code> 账号下面新建一个 <code>repo</code> 命名为 <code>username.github.io</code>，放入合适的网页文件，之后他人就能通过 <a href="https://username.github.io/">https://username.github.io</a> 来访问你的网页了。</p>
+<p>有人把这种生成 static 网页文件的博客叫做“静态博客”，相较于传统的新浪博客、博客园等三方博客，静态博客的优点包括：</p>
+<ul>
+<li>博客的网页文件自己生成，有更加多元化的样式可以自定义</li>
+<li>网页文件的部署自己选择，发布不受三方网站的约束，不会有审核、删帖之类的情况出现</li>
+<li>只要自己对源文件的管理得当，博客的内容永远不会丢失</li>
+<li><code>Markdown</code> 语法非常适合技术人员写作需求</li>
+</ul>
+<p>当然静态博客也存在一些弱点：</p>
+<ul>
+<li>搭建需要一点技术背景和知识，更适合程序员</li>
+<li>流量较小，网站的访问更多是依赖搜索引擎</li>
+</ul>
+<h2 id="搭建的完整流程"><a href="#搭建的完整流程" class="headerlink" title="搭建的完整流程"></a>搭建的完整流程</h2><h3 id="安装-Hexo"><a href="#安装-Hexo" class="headerlink" title="安装 Hexo"></a><a href="https://hexo.io/docs/">安装 <code>Hexo</code></a></h3><ol>
+<li><p>安装 <code>Node.js</code> 和 <code>Git</code>。<code>Git</code> 不多说了，去 <a href="https://nodejs.org/en/"><code>Node.js</code> 官网</a> 下载最新的包安装即可。</p>
+</li>
+<li><p>正常来说安装了 <code>Node.js</code> 运行环境后，就顺带安装好了 Node 的包管理工具 npm，使用 npm 安装 hexo:</p>
+<pre><code> npm install hexo
+</code></pre>
+</li>
+</ol>
+<h3 id="搭建流程"><a href="#搭建流程" class="headerlink" title="搭建流程"></a>搭建流程</h3><ol>
+<li><p>建好目录，初始化：</p>
+<pre><code> mkdir Blog &amp;&amp; cd &quot;$_&quot;
+ hexo init
+ npm install
+</code></pre>
+<p> 此时的文件结构如下：</p>
+<pre><code> .
+ ├── _config.landscape.yml
+ ├── _config.yml
+ ├── node_modules
+ ├── package-lock.json
+ ├── package.json
+ ├── scaffolds
+ ├── source
+ └── themes
+</code></pre>
+</li>
+<li><p>安装 <code>Next</code> 主题，推荐直接使用 npm 安装：</p>
+<pre><code> npm install hexo-theme-next
+</code></pre>
+<p> 之后打开 Blog 根目录下的 <code>_config.yml</code> 文件，将主题修改为 <code>next</code>：</p>
+<pre><code> theme: next
+</code></pre>
+<p> 将 <code>next</code> 默认的主题配置文件复制一份出来放在根目录，用来进行自定义配置：</p>
+<pre><code> cp node_modules/hexo-theme-next/_config.yml _config.next.yml
+</code></pre>
+<p> 此时最基础的文件就已经搭建好了，可以在 Local 预览一下：</p>
+<pre><code> hexo server
+</code></pre>
+<p> hexo 会创建一个本地服务，让你可以通过访问 <a href="http://localhost:4000/">http://localhost:4000/</a> 来预览刚刚生成的网页（预览后通过 <code>Ctrl+C</code> 退出）。</p>
+</li>
+<li><p>将博客源文件加入 <code>Git</code> 版本管理（方便后续修改的追溯和回滚）:</p>
+<pre><code> git init
+ git add .
+ git commit -m &quot;initialize&quot;
+</code></pre>
+</li>
+<li><p>现在开始我们的自定义配置，首先是站点配置，打开 <code>_config.yml</code> 对基础信息进行修改：</p>
+<pre><code> # Site
+ title: &quot;zhysan&#39;s Blog&quot;
+ author: 张三疯🍁
+ timezone: &#39;Asia/Shanghai&#39;
+</code></pre>
+<p> 然后是主题配置，打开 <code>_config.next.yml</code>，进行你想要的修改。配置文件里面已经包含了非常详细的注释，这里只列举一些我用到的配置项：</p>
+<ul>
+<li><p><code>Schemes</code>：<code>next</code> 主题的几种样式风格，目前有 <code>Muse</code>、<code>Mist</code>、<code>Pisces</code>、<code>Gemini</code> 四种可选，具体的差异可以去<a href="https://github.com/theme-next/awesome-next#live-preview">这里</a>预览。我选择的是左右分栏的 <code>Gemini</code></p>
+</li>
+<li><p><code>Menu Settings</code>：菜单项配置，首先去除前面的 <code>#</code> 来打开对应的配置项，然后用 hexo 生成对应的 page，例如 <code>about</code>（关于页）：</p>
+<pre><code>hexo new page about
+</code></pre>
+<p>可以看到在 source 目录下创建了一个 about 文件夹并生成了一个 index.md 文件：</p>
+<pre><code>INFO  Created: Blog/test/source/about/index.md
+</code></pre>
+<p>打开这个 index.md 添加 <code>type: about</code>:</p>
+<pre><code>---
+title: 关于
+date: 2001-02-15 21:43:04
+type: about
+---
+
+Hello, it&#39;s me!
+</code></pre>
+<p>其它的 Page 创建与此类似。</p>
+</li>
+<li><p><code>Comments Settings</code>：评论系统，如果你希望读者能够在你的文章下发表评论，你可以接入一些三方的评论服务，next 里面目前支持的包括：<code>disqus</code>、<code>disqusjs</code>、<code>changyan</code>、<code>livere</code>、<code>gitalk</code>、<code>utterances</code> 等等，我以前使用过 <code>disqus</code> 但是国内的访问速度不是很好，现在使用的是 <code>livere</code>。官方地址注释里面都有，选择对应的服务去官网创建账号，之后把必要的信息填入即可</p>
+</li>
+<li><p><code>Google Analytics</code>：Google 的站点访问分析，可以帮你统计站点访问量、访问时长等信息。同样注册号，填入 <code>tracking_id</code> 即可</p>
+</li>
+<li><p>更多配置项参考 <a href="https://theme-next.js.org/docs/theme-settings/">NexT 官方文档</a>，配置完成后，不要忘记 <code>git commit</code></p>
+</li>
+</ul>
+</li>
+</ol>
+<h3 id="写作"><a href="#写作" class="headerlink" title="写作"></a>写作</h3><p>一切就绪，写文章的过程非常简单，<code>hexo new &lt;title&gt;</code> 即可在 <code>source</code> 的 <code>_posts</code> 文件夹下面创建 <code>&lt;title&gt;.md</code> 文件，将内容添加到该文件即可</p>
+<h3 id="部署到-Github-Pages"><a href="#部署到-Github-Pages" class="headerlink" title="部署到 Github Pages"></a>部署到 <code>Github Pages</code></h3><ol>
+<li><p>创建博客的 <code>Github Pages</code>：在 Github 创建一个 <code>repo</code>，命名为<code>&lt;username&gt;.github.io</code>(将 username 替换为你 Github 的用户名或者 organization name)，权限选择 public</p>
+</li>
+<li><p>创建 Github 的 <code>Personal access token</code>：由于 Github 关闭了直接用户名+密码的鉴权方式，现在你需要通过 用户名+token 的方式来登录。去<a href="https://github.com/settings/tokens">这里</a> 创建一个 <code>blog_deploy_token</code> 用于 Blog 文件的 push（token 不会再展示出来，记得 copy）</p>
+</li>
+<li><p>安装 <code>hexo-deployer-git</code> 插件：</p>
+<pre><code> npm install hexo-deployer-git --save
+</code></pre>
+</li>
+<li><p>即创建的 <code>Github Pages</code> 关联到你的 Blog：打开 <code>_config.yml</code> 文件填入 Deployment 信息：</p>
+<pre><code> deploy:
+ type: git
+ repo: https://github.com/username/username.github.io
+ branch: master
+ token: xxx_xxxxxxxxx
+</code></pre>
+</li>
+<li><p>大功告成，执行 <code>hexo clean &amp;&amp; hexo deploy</code>，hexo 会基于你 source 下的源文件，生成对应的网页静态文件到 public 文件夹下，然后将这些文件推送到你的 GitHub Pages repo，之后，你就可以通过 username.github.io 访问你的 Blog 了。</p>
+</li>
+<li><p>你可以在 Github 再创建一个<strong>私有 repo</strong>，将 Blog 推送到这个私有仓库来托管你的源文件。（这个源仓库包含一些 token、key 等私有信息，切记不要推送到 public 仓库）</p>
+</li>
+</ol>
+<h2 id="参考文档："><a href="#参考文档：" class="headerlink" title="参考文档："></a>参考文档：</h2><p>hexo: <a href="https://hexo.io/docs/">https://hexo.io/docs/</a></p>
+<p>next: <a href="https://theme-next.js.org/docs/">https://theme-next.js.org/docs/</a></p>
+]]></content>
+      <categories>
+        <category>Blog</category>
+      </categories>
+      <tags>
+        <tag>Hexo, Next</tag>
+      </tags>
+  </entry>
+</search>
